@@ -1,4 +1,6 @@
 class ArticlesController < ApplicationController
+  http_basic_authenticate_with name: 'dhh', password: 'secret', except: %i[index show]
+
   def index
     @articles = Article.all
   end
@@ -53,6 +55,6 @@ class ArticlesController < ApplicationController
 
   def article_params
     # https://guides.rubyonrails.org/action_controller_overview.html#strong-parameters
-    params.require(:article).permit(:title, :body)
+    params.require(:article).permit(:title, :body, :status)
   end
 end
