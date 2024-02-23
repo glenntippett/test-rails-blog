@@ -8,11 +8,16 @@ class ArticlesController < ApplicationController
   end
 
   def new
+    if !user_signed_in?
+     flash.alert = 'You must be signed in to create an article'
+     redirect_back_or_to({ action: 'index' })
+    end
     @article = Article.new
   end
 
   def create
     @article = Article.new(article_params)
+    @article.user = current_user
 
     if @article.save
       # redirect_to will cause the browser to make a new request,
