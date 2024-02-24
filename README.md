@@ -39,3 +39,37 @@ https://guides.rubyonrails.org/getting_started.html#creating-the-blog-applicatio
 To choose the status for the existing articles and comments you can add a default value to the generated migration files by adding the default: "public" option and launch the migrations again. You can also call in a rails console Article.update_all(status: "public") and Comment.update_all(status: "public").
 
 ### Install Bootstrap
+
+`gem 'bootstrap'`
+`gem 'sassc-rails'`
+
+```
+# app/assets/stylesheets/application.scss
+@import "bootstrap";
+```
+
+`bin/importmap pin bootstrap`
+
+```
+// app/javascript/application.js
+import "@popperjs/core"
+import "bootstrap"
+```
+
+```
+// app/assets/config/manifest.js
+//= link popper.js
+//= link bootstrap.min.js
+```
+
+```
+# config/importmap.rb
+
+# replace these lines:
+# pin "bootstrap" # @5.3.2
+# pin "@popperjs/core", to: "@popperjs--core.js" # @2.11.8
+
+# with this:
+pin "bootstrap", to: "bootstrap.min.js", preload: true
+pin "@popperjs/core", to: "popper.js", preload: true
+```
