@@ -8,9 +8,9 @@ class ArticlesController < ApplicationController
   end
 
   def new
-    if !user_signed_in?
-     flash.alert = 'You must be signed in to create an article'
-     redirect_back_or_to({ action: 'index' })
+    unless user_signed_in?
+      flash.alert = 'You must be signed in to create an article'
+      redirect_back_or_to({ action: 'index' })
     end
     @article = Article.new
   end
@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
       # It is important to use redirect_to after mutating the database or application state.
       # Otherwise, if the user refreshes the page, the browser will make the same request
       # and the mutation will be repeated.
-      redirect_to @article
+      redirect_to @article, notice: 'Article added successfully'
     else
       # https://guides.rubyonrails.org/active_record_validations.html#working-with-validation-errors
       render :new, status: :unprocessable_entity
