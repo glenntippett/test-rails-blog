@@ -1,11 +1,24 @@
 class ArticlesController < ApplicationController
+  before_action :set_article, only: %i[show edit update destroy like unlike]
+  before_action :authenticate_user!, except: %i[index show]
+
+  def like
+    current_user.likes.create(likeable: @article)
+    # render partial: 'articles/article', locals: { article: @article }
+    redirect_to @article, notice: "You liked #{@article.title}"
+  end
+
+  def unlike
+    current_user.likes.find_by(likeable: @article).destroy
+    # render partial: 'articles/article', locals: { article: @article }
+    redirect_to @article, notice: "You un-liked #{@article.title}"
+  end
+
   def index
     @articles = Article.all
   end
 
-  def show
-    @article = Article.find(params[:id])
-  end
+  def show; end
 
   def new
     unless user_signed_in?
@@ -32,13 +45,9 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def edit
-    @article = Article.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @article = Article.find(params[:id])
-
     if @article.update(article_params)
       redirect_to @article
     else
@@ -47,14 +56,16 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
-
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303
     redirect_to root_path, status: :see_other
   end
 
   private
+
+  def set_article
+    @article = Article.find(params[:id])
+  end
 
   def article_params
     # https://guides.rubyonrails.org/action_controller_overview.html#strong-parameters

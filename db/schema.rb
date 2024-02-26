@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_23_062751) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_26_031243) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_23_062751) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_articles_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -30,6 +32,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_23_062751) do
     t.datetime "updated_at", null: false
     t.string "status"
     t.index ["article_id"], name: "index_comments_on_article_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "likeable_type", null: false
+    t.bigint "likeable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,12 +59,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_23_062751) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
-    t.bigint "user_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["user_id"], name: "index_users_on_user_id"
   end
 
+  add_foreign_key "articles", "users"
   add_foreign_key "comments", "articles"
-  add_foreign_key "users", "users"
+  add_foreign_key "likes", "users"
 end

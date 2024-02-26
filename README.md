@@ -73,3 +73,7 @@ import "bootstrap"
 pin "bootstrap", to: "bootstrap.min.js", preload: true
 pin "@popperjs/core", to: "popper.js", preload: true
 ```
+
+### Like Button
+
+[adding-likes-rails-hotwire-turbo](https://webcrunch.com/posts/adding-likes-rails-hotwire-turbo)

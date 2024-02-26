@@ -1,3 +1,13 @@
+<p><%= pluralize(@article.likes.count, 'like') %></p>
+<% if user_signed_in? %>
+  <% if current_user && @article.likes.exists?(user_id: current_user.id) %>
+    <%= button_to "Unlike", unlike_article_path(@article), method: :delete %>
+  <% else %>
+    <%= button_to "Like", like_article_path(@article), method: :post %>
+  <% end %>
+<% else %>
+  <%= link_to "Like", new_user_session_path, data: { turbo_frame: "_top" } %>
+<% end %>
 <h1><%= @article.title %></h1>
 <p><%= @article.body %></p>
 <ul>
