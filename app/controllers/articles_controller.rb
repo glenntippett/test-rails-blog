@@ -5,13 +5,13 @@ class ArticlesController < ApplicationController
   def like
     current_user.likes.create(likeable: @article)
     # render partial: 'articles/article', locals: { article: @article }
-    redirect_to @article, notice: "You liked #{@article.title}"
+    redirect_to @article, notice: "liked '#{@article.title}'"
   end
 
   def unlike
     current_user.likes.find_by(likeable: @article).destroy
     # render partial: 'articles/article', locals: { article: @article }
-    redirect_to @article, notice: "You un-liked #{@article.title}"
+    redirect_to @article, notice: "un-liked '#{@article.title}'"
   end
 
   def index
