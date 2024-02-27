@@ -5,7 +5,6 @@
   <%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
 <% end %>
 <%= link_to "Sign Up", new_user_registration_path %>
-<%= button_to "Alert", pages_index_path, method: :post %>
 <p>There are <%= pluralize(Article.public_count, 'article') %></p>
 <ul>
   <% @articles.each do |article| %>

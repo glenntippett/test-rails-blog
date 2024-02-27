@@ -12,6 +12,4 @@ Rails.application.routes.draw do
       delete 'unlike', to: 'articles#unlike' # article/:id/unlike
     end
   end
-
-  post 'pages/index'
 end
