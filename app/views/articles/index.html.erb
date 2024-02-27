@@ -2,18 +2,15 @@
 <% if !user_signed_in? %>
   <%= link_to "Sign In", new_user_session_path %>
 <% else %>
-  <%= link_to "Sign Out", destroy_user_session_path %>
+  <%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
 <% end %>
 <%= link_to "Sign Up", new_user_registration_path %>
-<p>
-  Our blog has <%= Article.public_count %> articles and counting!
-</p>
+<%= button_to "Alert", pages_index_path, method: :post %>
+<p>There are <%= pluralize(Article.public_count, 'article') %></p>
 <ul>
   <% @articles.each do |article| %>
     <% unless article.archived? %>
-      <li>
-        <%= link_to article.title, article %>
-      </li>
+      <li><%= link_to article.title, article %></li>
     <% end %>
   <% end %>
 </ul>
