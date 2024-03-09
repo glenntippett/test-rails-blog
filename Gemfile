@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
+
 gem 'bootstrap'
 gem 'devise', '~> 4.9'
 gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'main'
